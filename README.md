@@ -1,3 +1,6 @@
-# Repository for Python Training
+## Repository for Python Training
+---
 
+***Здесь будет лежать описание проекта по автоматизации тестирования***
 
+---
