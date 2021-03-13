@@ -1,2 +1,3 @@
-# python_training
-Repository for course "Python for testers"
+# Repository for Python Training
+
+
