@@ -24,7 +24,7 @@ class TestAddGroup(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, "admin", "secret")
         self.open_group_page(wd)
-        self.create_group(wd, Group("", "", ""))
+        self.create_group(wd, Group(" ", " ", " "))
         self.logout(wd)
 
     def logout(self, wd):
