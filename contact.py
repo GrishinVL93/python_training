@@ -5,7 +5,7 @@ class Contact:
         self.firstname = firstname
         self.middlename = middlename
         self.lastname = lastname
-        self.nickanme = nickname
+        self.nickname = nickname
         self.title = title
         self.companyname = companyname
         self.addresscompany = addresscompany
