@@ -13,21 +13,22 @@ class TestAddContact(unittest.TestCase):
         self.base_url = "https://www.google.com/"
 
     def test_add_contact(self):
-        wd = self.wd
-        self.open_page(wd)
-        self.login(wd, "admin", "secret")
-        self.open_contact_page(wd)
-        self.create_contact(wd, Contact("Vlad", "Grishin", "Petrov", "VlGrishin", "Engineer", "RTS COMPANY",
+
+        self.login("admin", "secret")
+        self.create_contact(Contact("Vlad", "Grishin", "Petrov", "VlGrishin", "Engineer", "RTS COMPANY",
                             "Moscow, Tverskaya street 34, h30", "+78999990073", "+79383434624", "GrishinTest@mail.ru",
                             "Adress Test", "Home Test", "Some notes"))
-        self.logout(wd)
+        self.logout()
 
-    def logout(self, wd):
+    def logout(self):
         # Выход из приложения
+        wd = self.wd
         wd.find_element_by_link_text("Logout").click()
 
-    def create_contact(self, wd, contact):
+    def create_contact(self,contact):
         # Заполняем поля и создаем контакт
+        wd = self.wd
+        self.open_contact_page()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys("%s" % contact.firstname)
@@ -60,19 +61,23 @@ class TestAddContact(unittest.TestCase):
         wd.find_element_by_name("notes").send_keys("%s" % contact.notes)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
-    def open_contact_page(self, wd):
+    def open_contact_page(self):
+        wd = self.wd
         # Открываем страницу создания контакта
         wd.find_element_by_link_text("add new").click()
 
-    def login(self, wd, name, password):
+    def login(self, name, password):
         # Авторизация в приложении
+        wd = self.wd
+        self.open_page()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys("%s" % name)
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys("%s" % password)
         wd.find_element_by_id("LoginForm").submit()
 
-    def open_page(self, wd):
+    def open_page(self):
+        wd = self.wd
         # Открываем стартовую страницу
         wd.get("https://localhost/addressbook/")
 
