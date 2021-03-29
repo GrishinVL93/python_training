@@ -5,86 +5,58 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-    def create(self, contact):
+    def create(self, data):
         # Заполняем поля и создаем контакт
         wd = self.app.wd
         self.open_contact_page()
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys("%s" % contact.firstname)
-        wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys("%s" % contact.middlename)
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys("%s" % contact.lastname)
-        wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys("%s" % contact.nickname)
-        wd.find_element_by_name("title").clear()
-        wd.find_element_by_name("title").send_keys("%s" % contact.title)
-        wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys("%s" % contact.companyname)
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys("%s" % contact.addresscompany)
-        wd.find_element_by_name("home").click()
-        wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys("%s" % contact.phone)
-        wd.find_element_by_name("mobile").click()
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys("%s" % contact.mobilephone)
-        wd.find_element_by_name("email").click()
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys("%s" % contact.email)
-        wd.find_element_by_name("address2").clear()
-        wd.find_element_by_name("address2").send_keys("%s" % contact.address2)
-        wd.find_element_by_name("phone2").clear()
-        wd.find_element_by_name("phone2").send_keys("%s" % contact.additionalphone)
-        wd.find_element_by_name("notes").clear()
-        wd.find_element_by_name("notes").send_keys("%s" % contact.notes)
+        self.fill_contact_form(data)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_home_page()
 
-    def update(self, contact):
+    def fill_contact_form(self, contact):
         wd = self.app.wd
-        # Выбираем на главной странице первый контакт
+        self.type("firstname", contact.firstname)
+        self.type("middlename", contact.middlename)
+        self.type("lastname", contact.lastname)
+        self.type("nickname", contact.nickname)
+        self.type("title", contact.title)
+        self.type("company", contact.companyname)
+        self.type("address", contact.addresscompany)
+        self.type("home", contact.phone)
+        self.type("mobile", contact.mobilephone)
+        self.type("email", contact.email)
+        self.type("address2", contact.address2)
+        self.type("phone2", contact.additionalphone)
+        self.type("notes", contact.notes)
+
+    def type(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys("%s" % text)
+
+    def select_first_contact(self):
+        wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
-        wd.find_element_by_xpath("//a[img[@title='Edit']]").click()
-        # Стираем старые значения и прописываем новые
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys("%s" % contact.firstname)
-        wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys("%s" % contact.middlename)
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys("%s" % contact.lastname)
-        wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys("%s" % contact.nickname)
-        wd.find_element_by_name("title").clear()
-        wd.find_element_by_name("title").send_keys("%s" % contact.title)
-        wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys("%s" % contact.companyname)
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys("%s" % contact.addresscompany)
-        wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys("%s" % contact.phone)
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys("%s" % contact.mobilephone)
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys("%s" % contact.email)
-        wd.find_element_by_name("address2").clear()
-        wd.find_element_by_name("address2").send_keys("%s" % contact.address2)
-        wd.find_element_by_name("phone2").clear()
-        wd.find_element_by_name("phone2").send_keys("%s" % contact.additionalphone)
-        wd.find_element_by_name("notes").clear()
-        wd.find_element_by_name("notes").send_keys("%s" % contact.notes)
-        wd.find_element_by_name("update").click()
-        self.return_home_page()
 
     def del_first_contact(self):
         wd = self.app.wd
         # select first group
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_contact()
         # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # confirmation deletion contact
         wd.switch_to_alert().accept()
+
+    def modify_first_contact(self, new_contact_data):
+        wd = self.app.wd
+        self.select_first_contact()
+        wd.find_element_by_xpath("//a[img[@title='Edit']]").click()
+        # open modification form
+        # wd.find_element_by_name("edit").click()
+        self.fill_contact_form(new_contact_data)
+        wd.find_element_by_name("update").click()
+        self.return_home_page()
 
     def open_contact_page(self):
         wd = self.app.wd
