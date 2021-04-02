@@ -60,8 +60,8 @@ class ContactHelper:
 
     def open_contact_page(self):
         wd = self.app.wd
-        # Открываем страницу создания контакта
-        wd.find_element_by_link_text("add new").click()
+        if not (wd.current_url.endwith("/edit.php") and len(wd.find_element_by_name("submit")) > 0):
+            wd.find_element_by_link_text("add new").click()
 
     def return_home_page(self):
         wd = self.app.wd
