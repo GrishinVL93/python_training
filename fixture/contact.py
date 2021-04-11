@@ -1,3 +1,4 @@
+from model.contact import Contact
 
 
 class ContactHelper:
@@ -47,6 +48,8 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # confirmation deletion contact
         wd.switch_to_alert().accept()
+        wd.find_element_by_css_selector("div.msgbox")
+        self.return_home_page()
 
     def modify_first_contact(self, new_contact_data):
         wd = self.app.wd
@@ -65,12 +68,21 @@ class ContactHelper:
 
     def return_home_page(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith("addressbook/") or
-                wd.current_url.endswith("addressbook/index.php") and
-                len(wd.find_elements_by_name("add")) > 0):
-            wd.find_element_by_link_text("home page").click()
+        if not (wd.current_url.endswith("addressbook/") or wd.current_url.endswith("addressbook/index.php") and len(wd.find_elements_by_name("add")) > 0):
+            wd.find_element_by_link_text("home").click()
 
     def count(self):
         wd = self.app.wd
-        self.open_contact_page()
+        self.return_home_page()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.return_home_page()
+        contacts = []
+        for element in wd.find_elements_by_xpath("//tr[@name='entry']"):
+           lastname = element.find_element_by_xpath("td[2]").text
+           firstname = element.find_element_by_xpath("td[3]").text
+           id = element.find_element_by_name("selected[]").get_attribute("value")
+           contacts.append(Contact(lastname=lastname, firstname=firstname, id=id))
+        return contacts
