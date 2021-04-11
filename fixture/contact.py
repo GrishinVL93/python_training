@@ -41,10 +41,17 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
 
+    def select_contact_by_id(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
     def del_first_contact(self):
+        self.del_contact_by_id(0)
+
+    def del_contact_by_id(self, index):
         wd = self.app.wd
         # select first group
-        self.select_first_contact()
+        self.select_contact_by_id(index)
         # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # confirmation deletion contact
@@ -53,12 +60,14 @@ class ContactHelper:
         self.return_home_page()
         self.contact_cache = None
 
-    def modify_first_contact(self, new_contact_data):
+    def modify_first_contact(self):
+        self.modify_contact_by_id(0)
+
+    def modify_contact_by_id(self, index, new_contact_data):
         wd = self.app.wd
-        self.select_first_contact()
+        self.select_contact_by_id(index)
         wd.find_element_by_xpath("//a[img[@title='Edit']]").click()
-        # open modification form
-        # wd.find_element_by_name("edit").click()
+        # fill contact form
         self.fill_contact_form(new_contact_data)
         wd.find_element_by_name("update").click()
         self.return_home_page()
@@ -71,7 +80,8 @@ class ContactHelper:
 
     def return_home_page(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith("addressbook/") or wd.current_url.endswith("addressbook/index.php") and len(wd.find_elements_by_name("add")) > 0):
+        if not (wd.current_url.endswith("addressbook/") or wd.current_url.endswith("addressbook/index.php") and len(
+                wd.find_elements_by_name("add")) > 0):
             wd.find_element_by_link_text("home").click()
 
     def count(self):
