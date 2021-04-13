@@ -45,6 +45,11 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
+    def open_contact_to_edit_by_id(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+        wd.find_elements_by_xpath("//a[img[@title='Edit']]")[index].click()
+
     def del_first_contact(self):
         self.del_contact_by_id(0)
 
@@ -65,8 +70,7 @@ class ContactHelper:
 
     def modify_contact_by_id(self, index, new_contact_data):
         wd = self.app.wd
-        self.select_contact_by_id(index)
-        wd.find_element_by_xpath("//a[img[@title='Edit']]").click()
+        self.open_contact_to_edit_by_id(index)
         # fill contact form
         self.fill_contact_form(new_contact_data)
         wd.find_element_by_name("update").click()
