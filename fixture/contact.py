@@ -18,18 +18,11 @@ class ContactHelper:
     def fill_contact_form(self, contact):
         wd = self.app.wd
         self.type("firstname", contact.firstname)
-        self.type("middlename", contact.middlename)
         self.type("lastname", contact.lastname)
-        self.type("nickname", contact.nickname)
-        self.type("title", contact.title)
-        self.type("company", contact.companyname)
-        self.type("address", contact.addresscompany)
-        self.type("home", contact.phone)
+        self.type("home", contact.homephone)
         self.type("mobile", contact.mobilephone)
-        self.type("email", contact.email)
-        self.type("address2", contact.address2)
-        self.type("phone2", contact.additionalphone)
-        self.type("notes", contact.notes)
+        self.type("work", contact.workphone)
+        self.type("phone2", contact.secondaryphone)
 
     def type(self, field_name, text):
         wd = self.app.wd
@@ -106,3 +99,17 @@ class ContactHelper:
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id))
         return list(self.contact_cache)
+
+    def get_contact_info_from_edit_page(self, index):
+        wd = self.ap.wd
+        self.open_contact_to_edit_by_id(index)
+        firstname = wd.find_element_by_name("firstname").get_attribute("value")
+        lastname = wd.find_element_by_name("lastname").get_attribute("value")
+        id = wd.find_element_by_name("id").get_attribute("value")
+        homephone = wd.find_element_by_name("home").get_attribute("value")
+        workphone = wd.find_element_by_name("work").get_attribute("value")
+        mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
+        secondaryphone = wd.find_element_by_name("phone2").get_attribute("value")
+        return Contact(firstname=firstname, lastname=lastname, id=id, homephone=homephone,
+                       workphone=workphone, mobilephone=mobilephone, secondaryphone=secondaryphone)
+

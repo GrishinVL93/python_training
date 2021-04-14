@@ -2,25 +2,17 @@ from sys import maxsize
 
 
 class Contact:
-    def __init__(self, firstname=None, middlename=None, lastname=None, nickname=None, title=None, companyname=None, addresscompany=None, phone=None,
-                       mobilephone=None, email=None, address2=None, additionalphone=None, notes=None, id=None):
+    def __init__(self, firstname=None, lastname=None, homephone=None, mobilephone=None, workphone=None, secondaryphone=None,id=None):
         self.firstname = firstname
-        self.middlename = middlename
         self.lastname = lastname
-        self.nickname = nickname
-        self.title = title
-        self.companyname = companyname
-        self.addresscompany = addresscompany
-        self.phone = phone
+        self.homephone = homephone
         self.mobilephone = mobilephone
-        self.email = email
-        self.address2 = address2
-        self.additionalphone = additionalphone
-        self.notes = notes
+        self.workphone = workphone
+        self.secondaryphone = secondaryphone
         self.id = id
 
     def __repr__(self):
-        return "%s:%s:%s" % (self.id, self.firstname, self.lastname)
+        return "%s:%s %s" % (self.id, self.firstname, self.lastname)
 
     def __eq__(self, other):
         return (self.id is None or other.id is None or self.id == other.id) \
