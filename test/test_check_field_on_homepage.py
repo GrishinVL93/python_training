@@ -1,11 +1,14 @@
 import re
+from random import randrange
 
 from model.contact import Contact
 
 
 def test_contact_fields_on_home_page(app):
-    contacts_from_home_page = app.contact.get_contact_list()[0]
-    contacts_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
+    contacts = app.contact.get_contact_list()
+    index = randrange(len(contacts))
+    contacts_from_home_page = app.contact.get_contact_list()[index]
+    contacts_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
     assert contacts_from_home_page.lastname == clear(contacts_from_edit_page.lastname)
     assert contacts_from_home_page.firstname == clear(contacts_from_edit_page.firstname)
     assert contacts_from_home_page.address == clear(contacts_from_edit_page.address)
