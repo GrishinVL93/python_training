@@ -27,11 +27,12 @@ class DbFixture:
         list = []
         cursor = self.connection.cursor()
         try:
-            cursor.execute("select id, firstname, lastname, home, mobile, work, phone2 from addressbook")
+            cursor.execute("select id, firstname, lastname, address, home, mobile, work, phone2,"
+                           "email, email2, email3 from addressbook where deprecated='0000-00-00 00:00:00'")
             for row in cursor:
-                (id, firstname, lastname, homephone, mobilephone, workphone, secondaryphone) = row
-                list.append(Contact(id=str(id), firstname=firstname, lastname=lastname, homephone=homephone,
-                                    mobilephone=mobilephone, workphone=workphone, secondaryphone=secondaryphone))
+                (id, firstname, lastname, address, homephone, mobilephone, workphone, secondaryphone, email, email2, email3) = row
+                list.append(Contact(id=str(id), firstname=firstname, address=address, lastname=lastname, homephone=homephone,
+                                    mobilephone=mobilephone, workphone=workphone, secondaryphone=secondaryphone, email=email, email2=email2, email3=email3))
         finally:
             cursor.close()
         return list
