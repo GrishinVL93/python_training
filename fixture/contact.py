@@ -1,3 +1,5 @@
+from selenium.webdriver.support.select import Select
+
 from model.contact import Contact
 import re
 
@@ -199,3 +201,22 @@ class ContactHelper:
         secondaryphone = re.search("P: (.*)", text).group(1)
         return Contact(homephone=homephone,
                        workphone=workphone, mobilephone=mobilephone, secondaryphone=secondaryphone)
+
+    def set_listgroup_for_contacts(self, group):
+        wd = self.app.wd
+        self.return_home_page()
+        if group.id == '[all]':
+            self.return_home_page()
+        elif group.id == '[none]':
+            Select(wd.find_element_by_name("group")).select_by_value('[none]')
+        else:
+            Select(wd.find_element_by_name("group")).select_by_value(group.id)
+
+    def add_contact_to_selected_group(self, group):
+        wd = self.app.wd
+        Select(wd.find_element_by_name("to_group")).select_by_value(group.id)
+        wd.find_element_by_name("add").click()
+
+    def delete_contact_from_selected_group(self):
+        wd = self.app.wd
+        wd.find_element_by_name("remove").click()
