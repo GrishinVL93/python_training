@@ -1,0 +1,68 @@
+[
+  {
+    "py/object": "model.contact.Contact",
+    "firstname": "",
+    "lastname": "",
+    "id": null,
+    "homephone": "",
+    "mobilephone": "",
+    "workphone": "",
+    "secondaryphone": "",
+    "all_phones_from_home_page": null
+  },
+  {
+    "py/object": "model.contact.Contact",
+    "firstname": "firstnamejM",
+    "lastname": "lastnamex Em PKXzb",
+    "id": null,
+    "homephone": "homephonePYQrb",
+    "mobilephone": "mobilephoneA",
+    "workphone": "workphonea9VDSssi",
+    "secondaryphone": "secondary",
+    "all_phones_from_home_page": null
+  },
+  {
+    "py/object": "model.contact.Contact",
+    "firstname": "firstnameyPyz5pV",
+    "lastname": "lastnameUtv3sijVdXubRdw6Ub4",
+    "id": null,
+    "homephone": "homephone",
+    "mobilephone": "mobilephoneWZs2C355",
+    "workphone": "workphoneMtQJ1E",
+    "secondaryphone": "secondaryIijAWTd",
+    "all_phones_from_home_page": null
+  },
+  {
+    "py/object": "model.contact.Contact",
+    "firstname": "firstnameOX",
+    "lastname": "lastnamed",
+    "id": null,
+    "homephone": "homephone1Drb",
+    "mobilephone": "mobilephone92JlO",
+    "workphone": "workphoneqhA",
+    "secondaryphone": "secondarycf",
+    "all_phones_from_home_page": null
+  },
+  {
+    "py/object": "model.contact.Contact",
+    "firstname": "firstname",
+    "lastname": "lastnameDi",
+    "id": null,
+    "homephone": "homephone",
+    "mobilephone": "mobilephoneFw2NGu",
+    "workphone": "workphoneKbF7dg",
+    "secondaryphone": "secondary5Pua3a",
+    "all_phones_from_home_page": null
+  },
+  {
+    "py/object": "model.contact.Contact",
+    "firstname": "firstnameHbnnGIm",
+    "lastname": "lastname0",
+    "id": null,
+    "homephone": "homephonePEJ46jXa",
+    "mobilephone": "mobilephoneLSX",
+    "workphone": "workphoneBWYT",
+    "secondaryphone": "secondaryGE0",
+    "all_phones_from_home_page": null
+  }
+]
