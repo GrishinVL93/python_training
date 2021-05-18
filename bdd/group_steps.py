@@ -52,9 +52,9 @@ def verify_group_deleted(db, non_empty_group_list, random_group):
 
 
 @when("I modify the group from the list")
-def delete_random_group(app, random_group, new_group):
+def modify_random_group(app, random_group, new_group):
     new_group.id = random_group.id
-    app.group.modify_group_by_id(new_group, random_group.id)
+    app.group.edit_group_by_id(new_group, random_group.id)
 
 
 @then("the new group list is equal to the old group list with the modified group")
