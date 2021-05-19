@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+from fixture import orm
 from model.contact import Contact
 import random
 from model.group import Group
+
+
 # import pytest
 # import random
 # import string
@@ -16,6 +19,15 @@ def test_add_contact(app, db, json_contacts):
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 
+def get_contact_without_group(group, orm):
+    contacts_without_group = orm.get_contacts_not_in_group(group)
+    if len(contacts_without_group) == 0:
+        return None
+    else:
+        index = random.randint(0, len(contacts_without_group) - 1)
+        return contacts_without_group[index]
+
+
 def test_add_random_contact_to_group(app, orm):
     new_group = None
     new_contact = None
@@ -25,12 +37,25 @@ def test_add_random_contact_to_group(app, orm):
                           header='HEADER',
                           footer='FOOTER')
         app.group.create(new_group)
+
     contacts = orm.get_contact_list()
+
     if len(contacts) == 0:
         new_contact = Contact(firstname='FIRSTNAME',
                               lastname='LASTNAME',
                               middlename='MIDDLENAME')
         app.contact.create(new_contact)
+    else:
+        for group in groups:
+            new_contact = get_contact_without_group(group, orm)
+            if new_contact is not None:
+                break
+
+    if new_contact is None:
+        new_contact = Contact(firstname='FIRSTNAME_2',
+                              lastname='LASTNAME_2',
+                              middlename='MIDDLENAME_2')
+
     if new_group is None:
         index = random.randint(0, len(groups) - 1)
         new_group = groups[index]
@@ -44,7 +69,6 @@ def test_add_random_contact_to_group(app, orm):
     app.contact.select_contact_by_id(new_contact.id)
     app.contact.add_contact_to_selected_group(new_group)
     assert orm.contact_in_group(new_contact, new_group) == True
-
 
 # def random_string(prefix, maxlen):
 #     symbols = string.ascii_letters + string.digits + " " * 10
