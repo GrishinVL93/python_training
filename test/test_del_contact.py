@@ -37,7 +37,7 @@ def test_del_random_contact_from_group(app, orm):
                               middlename='Middle Name')
         app.contact.create(new_contact)
 
-    contacts = list()
+  #  contacts = list()
     group = Group(id='[none]')
     flag = False
 
